@@ -6,15 +6,23 @@
              xmlns:local="clr-namespace:Farm_Group_Project.VisualizationItems"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
-    <Grid Background="White">
+    <UserControl.Resources>
+        <local:BuildingEntity x:Key="data"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Source="{StaticResource data}"/>
+    </UserControl.DataContext>
+    
+    <Grid Background="White" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Test" Grid.Row="0" FontSize="15" TextAlignment="Center"/>
+        <TextBlock Text="{Binding Name}" Grid.Row="0" FontSize="15" TextAlignment="Center"/>
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3">
-            
+            <Canvas HorizontalAlignment="Stretch" x:Name="Content">
+            </Canvas>
         </Border>
     </Grid>
 </UserControl>
