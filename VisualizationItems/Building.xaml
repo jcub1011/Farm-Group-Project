@@ -7,22 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
-        <local:BuildingEntity x:Key="data"/>
+        <local:Building x:Key="data"/>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource data}"/>
     </UserControl.DataContext>
-    
-    <Grid Background="White" HorizontalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Name}" Grid.Row="0" FontSize="15" TextAlignment="Center"/>
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3">
-            <Canvas HorizontalAlignment="Stretch" x:Name="Content">
-            </Canvas>
+    <Canvas Background="White" HorizontalAlignment="Stretch" x:Name="MainContainer">
+        <TextBlock Text="{Binding Name}" Grid.Row="0" FontSize="15" TextAlignment="Center" Canvas.Top="0" Height="20" Width="500"/>
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3" Canvas.Top="20">
+            <Canvas HorizontalAlignment="Stretch" x:Name="Content"/>
         </Border>
-    </Grid>
+    </Canvas>
 </UserControl>
