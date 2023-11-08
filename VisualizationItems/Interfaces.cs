@@ -10,7 +10,7 @@ namespace Farm_Group_Project.VisualizationItems
 {
     public interface IItem
     {
-        public string Name { get; set; }
+        public string ItemName { get; set; }
         public double[] Location { get; set; }
         public double[] Dimensions { get; set; }
         public double Price { get; set; }

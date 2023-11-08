@@ -27,6 +27,12 @@ namespace Farm_Group_Project.VisualizationItems
 
         public System.Collections.IEnumerator Children => Content.Children.GetEnumerator();
 
+        public string ItemName
+        {
+            get => Title.Text;
+            set { Title.Text = value; }
+        }
+
         public double[] Location
         {
             get
@@ -50,6 +56,9 @@ namespace Farm_Group_Project.VisualizationItems
             {
                 Width = value[0];
                 Height = value[1];
+                Title.Width = value[0];
+                Content.Width = value[0];
+                Content.Height = value[1] - Title.Height;
             }
         }
 

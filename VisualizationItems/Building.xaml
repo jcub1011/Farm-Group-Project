@@ -6,17 +6,20 @@
              xmlns:local="clr-namespace:Farm_Group_Project.VisualizationItems"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
+    <!--
     <UserControl.Resources>
         <local:Building x:Key="data"/>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource data}"/>
-    </UserControl.DataContext>
+    </UserControl.DataContext> -->
 
     <Canvas Background="White" HorizontalAlignment="Stretch" x:Name="MainContainer">
-        <TextBlock Text="{Binding Name}" Grid.Row="0" FontSize="15" TextAlignment="Center" Canvas.Top="0" Height="20" Width="500"/>
+        <TextBlock Text="TEst" Grid.Row="0" FontSize="15" TextAlignment="Center" Canvas.Top="0" Height="20" Width="500" x:Name="Title"/>
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3" Canvas.Top="20">
-            <Canvas HorizontalAlignment="Stretch" x:Name="Content"/>
+            <Canvas HorizontalAlignment="Stretch" x:Name="Content" Width="100" Height="100">
+                
+            </Canvas>
         </Border>
     </Canvas>
 </UserControl>

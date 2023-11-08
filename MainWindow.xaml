@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:Farm_Group_Project"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+    <Canvas x:Name="TestContainer">
+    </Canvas>
 </Window>
