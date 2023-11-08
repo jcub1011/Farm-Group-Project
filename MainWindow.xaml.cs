@@ -1,6 +1,8 @@
 ﻿using Farm_Group_Project.VisualizationItems;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +36,9 @@ namespace Farm_Group_Project
             innerTestChild.ItemName = "Inner Test Building";
             innerTestChild.Dimensions = new double[2] { 100, 100 };
             innerTestChild.Location = new double[2] { 10, 10 };
+
+            Debug.WriteLine($"Current Directory: \n {AppContext.BaseDirectory}");
+            ResourceManager.SetResourceDirectory();
 
             testChild.AddChild(innerTestChild);
 
