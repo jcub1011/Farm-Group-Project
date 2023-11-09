@@ -31,8 +31,8 @@ namespace Farm_Group_Project
     public partial class VisualizationControl : UserControl
     {
         #region Properties
-        VirtualDrone drone;
-        Building commandCenter;
+        readonly VirtualDrone drone;
+        readonly Building commandCenter;
         #endregion
 
         public VisualizationControl()
@@ -64,7 +64,23 @@ namespace Farm_Group_Project
         }
 
         #region Methods
+        /// <summary>
+        /// Command the drone to move to the given coordinates. Velocity is pixels per second.
+        /// </summary>
+        /// <param name="coordinates">{ x, y }</param>
+        /// <param name="velocity">pixels/s</param>
+        public void MoveDrone(double[] coordinates, double velocity)
+        {
+            drone.MoveTo(coordinates, velocity);
+        }
 
+        /// <summary>
+        /// Command the drone to stop all move commands.
+        /// </summary>
+        public void StopDrone()
+        {
+            drone.CancelMoves();
+        }
         #endregion
     }
 }
