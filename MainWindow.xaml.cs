@@ -1,4 +1,5 @@
-﻿using Farm_Group_Project.VisualizationItems;
+﻿using Farm_Group_Project.InventorySystem;
+using Farm_Group_Project.VisualizationItems;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,7 +29,7 @@ namespace Farm_Group_Project
         {
             InitializeComponent();
 
-            TestContainer.Children.Add(new VisualizationControl());
+            TestContainer.Children.Add(new InventoryView());
         }
     }
 }
