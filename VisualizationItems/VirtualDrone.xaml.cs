@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace Farm_Group_Project.VisualizationItems
 {
@@ -16,7 +17,7 @@ namespace Farm_Group_Project.VisualizationItems
     /// <summary>
     /// Interaction logic for VirtualDrone.xaml
     /// </summary>
-    public partial class VirtualDrone : UserControl
+    public partial class VirtualDrone : UserControl, IItem
     {
         const double UPDATE_RATE = 60;
         bool _isMoving;
@@ -42,17 +43,44 @@ namespace Farm_Group_Project.VisualizationItems
             }
         }
 
+        public string ItemName
+        {
+            get => DroneName.Text;
+            set => DroneName.Text = value;
+        }
+
+        public string ItemTag { get; set; } = Tags.Drone;
+
+        public double[] Dimensions
+        {
+            get
+            {
+                return new double[] { Width, Height };
+            }
+            set
+            {
+                throw new Exception("Drones can't have their dimensions edited.");
+            }
+        }
+
+        public double Price { get; set; }
+
         double GetDistance(double[] coords1, double[] coords2)
         {
             return Math.Sqrt(Math.Pow(coords2[0] - coords1[0], 2) + Math.Pow(coords2[1] - coords1[1], 2));
         }
 
-        public VirtualDrone()
+        public VirtualDrone(string itemName, string itemTag, double[] location, double price)
         {
             InitializeComponent();
             _isMoving = false;
             _cancel = false;
             _movesToComplete = new Queue<MoveCommand>();
+
+            ItemName = itemName;
+            ItemTag = itemTag;
+            Location = location;
+            Price = price;
         }
 
         public void CancelMoves()
@@ -71,6 +99,7 @@ namespace Farm_Group_Project.VisualizationItems
         /// <param name="velocity">Pixels per second.</param>
         public async void MoveTo(double[] coords, double velocity)
         {
+            // Checks if the drone is busy and queues the command if it is.
             if (_isMoving)
             {
                 _movesToComplete.Enqueue(new MoveCommand()
@@ -82,6 +111,7 @@ namespace Farm_Group_Project.VisualizationItems
             }
             _isMoving = true;
 
+            // Calcuate how many pixels to move each update.
             double seconds = GetDistance(Location, coords) / velocity;
 
             long fullTicksToComplete = (long)(seconds * UPDATE_RATE);

@@ -20,11 +20,18 @@ namespace Farm_Group_Project.VisualizationItems
     /// </summary>
     public partial class Building : UserControl, IItemContainer
     {
-        public Building()
+        public Building(string itemName, string itemTag, double[] location, double[] dimensions, double price)
         {
             InitializeComponent();
+
+            ItemName = itemName;
+            ItemTag = itemTag;
+            Location = location;
+            Dimensions = dimensions;
+            Price = price;
         }
 
+        #region Interface Implementations
         public UIElementCollection ChildObjects => Content.Children;
 
         public string ItemName
@@ -85,5 +92,6 @@ namespace Farm_Group_Project.VisualizationItems
         {
             Content.Children.Remove((UIElement)container);
         }
+        #endregion
     }
 }

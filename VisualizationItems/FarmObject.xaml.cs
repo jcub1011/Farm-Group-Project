@@ -20,9 +20,15 @@ namespace Farm_Group_Project.VisualizationItems
     /// </summary>
     public partial class FarmObject : UserControl, IItem
     {
-        public FarmObject()
+        public FarmObject(string itemName, string itemTag, double[] location, double[]dimensions, double price)
         {
             InitializeComponent();
+
+            ItemName = itemName;
+            ItemTag = itemTag;
+            Location = location;
+            Dimensions = dimensions;
+            Price = price;
         }
 
         #region Interface Implementations

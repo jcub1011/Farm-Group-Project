@@ -27,8 +27,7 @@ namespace Farm_Group_Project.VisualizationItems
         public double[] Location { get; set; }
 
         /// <summary>
-        /// Dimensions are automatically set by default. 
-        /// Overriding the dimensions makes it imposssible to have the dimensions automatically set themselves again.
+        /// Width and height of the object.
         /// Array must have a length of 2 where { width, height }.
         /// </summary>
         public double[] Dimensions { get; set; }
