@@ -33,6 +33,8 @@ namespace Farm_Group_Project.VisualizationItems
             set { Title.Text = value; }
         }
 
+        public string ItemTag { get; set; }
+
         public double[] Location
         {
             get

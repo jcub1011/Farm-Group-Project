@@ -16,6 +16,11 @@ namespace Farm_Group_Project.VisualizationItems
         public string ItemName { get; set; }
 
         /// <summary>
+        /// The object tag.
+        /// </summary>
+        public string ItemTag { get; set; }
+
+        /// <summary>
         /// Location of object with respect to the parent container.
         /// Array must have a length of 2 { x, y }.
         /// </summary>

@@ -32,6 +32,8 @@ namespace Farm_Group_Project.VisualizationItems
             set => ObjectName.Text = value;
         }
 
+        public string ItemTag { get; set; }
+
         public double[] Location
         {
             get
