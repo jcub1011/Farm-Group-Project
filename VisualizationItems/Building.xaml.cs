@@ -25,7 +25,7 @@ namespace Farm_Group_Project.VisualizationItems
             InitializeComponent();
         }
 
-        public System.Collections.IEnumerator Children => Content.Children.GetEnumerator();
+        public UIElementCollection ChildObjects => Content.Children;
 
         public string ItemName
         {

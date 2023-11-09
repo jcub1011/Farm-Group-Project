@@ -33,6 +33,7 @@ namespace Farm_Group_Project
 
         public static void SetResourceDirectory()
         {
+            // Attempts to locate the resource folder starting from the folder the application runs in propogating upwards.
             ResourceDirectory = AppContext.BaseDirectory;
 
             while (!DirectoryContains(ResourceDirectory, APPLICATION_RESOURCES))

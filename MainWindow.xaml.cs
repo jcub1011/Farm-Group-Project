@@ -27,6 +27,7 @@ namespace Farm_Group_Project
         {
             InitializeComponent();
 
+            /* Test code I used to ensure object functionality.
             var testChild = new Building();
             testChild.ItemName = "Test Building";
             testChild.Dimensions = new double[2] { 200, 200 };
@@ -35,14 +36,30 @@ namespace Farm_Group_Project
             var innerTestChild = new Building();
             innerTestChild.ItemName = "Inner Test Building";
             innerTestChild.Dimensions = new double[2] { 100, 100 };
-            innerTestChild.Location = new double[2] { 10, 10 };
+            innerTestChild.Location = new double[2] { 10, 100 };
+
+            var item = new FarmObject();
+            item.ItemName = "Test object";
+            item.Location = new double[2] { 15, 30 };
+
+            var otherItem = new FarmObject();
+            otherItem.ItemName = "Other test object";
+            otherItem.Location = new double[2] { 15, 30 };
 
             Debug.WriteLine($"Current Directory: \n {AppContext.BaseDirectory}");
             ResourceManager.SetResourceDirectory();
 
             testChild.AddChild(innerTestChild);
+            innerTestChild.AddChild(item);
 
             TestContainer.Children.Add(testChild);
+            testChild.AddChild(otherItem);
+
+            foreach(var child in testChild.ChildObjects)
+            {
+                Debug.WriteLine(child.GetType());
+            }
+            */
         }
     }
 }
