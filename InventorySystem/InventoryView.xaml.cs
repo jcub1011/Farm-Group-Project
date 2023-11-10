@@ -1,6 +1,7 @@
 ﻿using Farm_Group_Project.VisualizationItems;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,13 @@ namespace Farm_Group_Project.InventorySystem
         public InventoryView()
         {
             InitializeComponent();
+
+            PropertyShower.ItemToModify = (InventoryItem)ContentContainer.SelectedItem;
+            ContentContainer.SelectedItemChanged += (_, _) =>
+            {
+                PropertyShower.ItemToModify = (InventoryItem)ContentContainer.SelectedItem;
+                Debug.WriteLine("New item selected.");
+            };
 
             var building = new InventoryItem("Building 1", Tags.Building, new double[] { 300, 100 }, new double[] { 100, 100 }, 10000);
             var building2 = new InventoryItem("Building 2", Tags.Building, new double[] { 10, 10 }, new double[] { 90, 90 }, 10000);
