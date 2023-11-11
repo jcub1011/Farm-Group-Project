@@ -9,16 +9,23 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Border>
         <Grid Background="Gray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Farm Visualizer" Grid.Row="0" FontWeight="Bold" Padding="5"/>
-            <ItemsControl ItemsSource="{Binding Source}" Grid.Row="1">
+            <TextBlock Text="Farm Visualizer" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Padding="5"/>
+            <Button Grid.Row="0" Grid.Column="1" FontWeight="Bold" Padding="5" Click="Button_Click">Click Here To Refresh View</Button>
+            <Canvas Background="White" x:Name="ContentHolder" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <!-- 
+            <ItemsControl ItemsSource="{Binding Source}" Grid.Row="1" HorizontalContentAlignment="Stretch">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Background="White">
+                        <Canvas Background="White" HorizontalAlignment="Stretch">
                         
                         </Canvas>
                     </ItemsPanelTemplate>
@@ -26,7 +33,9 @@
             
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:VisualObject ChildObjects="{Binding Source}" DisplayName="{Binding ItemName}"/>
+                        <local:VisualObject ItemName="{Binding ItemName}" Children="{Binding Children}"
+                                            ObjectWidth="{Binding Dimensions[0]}" ObjectHeight="{Binding Dimensions[1]}"
+                                            X="{Binding Location[0]}" Y="{Binding Location[1]}" HorizontalContentAlignment="Stretch"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>
@@ -38,6 +47,7 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
+                -->
         </Grid>
     </Border>
 </UserControl>

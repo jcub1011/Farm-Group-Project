@@ -6,38 +6,17 @@
              xmlns:local="clr-namespace:Farm_Group_Project.VisualizationItems"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Border BorderThickness="3" Background="White">
-        <Grid Background="Gray">
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             HorizontalContentAlignment="Stretch">
+    <Border BorderThickness="3" Background="White" BorderBrush="Black">
+        <Grid Background="Gray" x:Name="MainContainer">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="{Binding DisplayName}" Grid.Row="0" FontWeight="Bold" Padding="5"/>
-            <ItemsControl ItemsSource="{Binding ChildObjects}" Grid.Row="1">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas Background="White">
-
-                        </Canvas>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:VisualObject ChildObjects="{Binding Children}" DisplayName="{Binding ItemName}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Canvas.Left" Value="{Binding Location[0]}" />
-                        <Setter Property="Canvas.Top" Value="{Binding Location[1]}" />
-                        <Setter Property="Canvas.Width" Value="{Binding Dimensions[0]}" />
-                        <Setter Property="Canvas.Height" Value="{Binding Dimensions[1]}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
+            <TextBlock Text="Test" Grid.Row="0" FontWeight="Bold" Padding="5" x:Name="DisplayText"/>
+            <Canvas Background="White" x:Name="ContentHolder" Grid.Row="1"/>
         </Grid>
     </Border>
 </UserControl>

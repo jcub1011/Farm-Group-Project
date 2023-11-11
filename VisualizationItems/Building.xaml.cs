@@ -22,7 +22,7 @@ namespace Farm_Group_Project.VisualizationItems
     /// <summary>
     /// Interaction logic for Building.xaml
     /// </summary>
-    public partial class Building : UserControl, IInventoryItem
+    public partial class Building : UserControl, IInventoryItem, IInventoryItemContainer
     {
         private readonly Dictionary<IInventoryItem, UIElement> inventoryItemToElementMap = new();
 
@@ -120,6 +120,7 @@ namespace Farm_Group_Project.VisualizationItems
             }
         }
 
+        /*
         public void AddChild(IInventoryItem item)
         {
             if (item.Children == null)
@@ -139,6 +140,26 @@ namespace Farm_Group_Project.VisualizationItems
         public void RemoveChild(IInventoryItem item)
         {
             if (inventoryItemToElementMap.ContainsKey(item)) Content.Children.Remove(inventoryItemToElementMap[item]);
+        }*/
+
+        public void Add(IInventoryItem item)
+        {
+            switch (item)
+            {
+                case Building:
+                    Content.Children.Add((Building)item);
+                    break;
+                case FarmObject:
+                    Content.Children.Add((FarmObject)item);
+                    break;
+                default:
+                    throw new ArgumentException($"Type {item.GetType()} is unsupported.");
+            }
+        }
+
+        public void Remove(IInventoryItem item)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

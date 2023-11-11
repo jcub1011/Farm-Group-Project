@@ -57,7 +57,7 @@ namespace Farm_Group_Project
             );
 
             // Add drone to command center.
-            commandCenter.AddChild(drone);
+            commandCenter.Add(drone);
 
             // Add command center to canvas.
             BaseContainer.Children.Add(commandCenter);

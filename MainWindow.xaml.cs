@@ -43,12 +43,15 @@ namespace Farm_Group_Project
             building2.Children.Add(item1);
             building3.Children.Add(item3);
 
-            ObservableCollection<IInventoryItem> sourceItems = new();
-            sourceItems.Add(building);
-            sourceItems.Add(building3);
+            ObservableCollection<IInventoryItem> sourceItems = new()
+            {
+                building,
+                building3
+            };
 
             Inventory.Source = sourceItems;
-            
+            Visualizer.Source = sourceItems;
+            Visualizer.UpdateView();
         }
     }
 }
