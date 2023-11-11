@@ -3,13 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Farm_Group_Project.InventorySystem
 {
-    public class InventoryItem: INotifyPropertyChanged
+    public interface IInventoryItem: INotifyPropertyChanged
+    {
+        string ItemName { get; set; }
+        string ItemTag { get; set; }
+        double[] Location { get; set; }
+        double[] Dimensions { get; set; }
+        double Price { get; set; }
+        ObservableCollection<IInventoryItem>? Children { get; set; }
+    }
+
+    public class InventoryItem: IInventoryItem
     {
         string _itemName;
         public string ItemName
@@ -68,8 +79,8 @@ namespace Farm_Group_Project.InventorySystem
             }
         }
 
-        ObservableCollection<InventoryItem>? _children;
-        public ObservableCollection<InventoryItem>? Children
+        ObservableCollection<IInventoryItem>? _children;
+        public ObservableCollection<IInventoryItem>? Children
         {
             get => _children;
             set
@@ -79,7 +90,7 @@ namespace Farm_Group_Project.InventorySystem
             }
         }
 
-        public InventoryItem(string itemName, string itemTag, double[] location, double[] dims, double price, ObservableCollection<InventoryItem>? children = null)
+        public InventoryItem(string itemName, string itemTag, double[] location, double[] dims, double price, ObservableCollection<IInventoryItem>? children = null)
         {
             ItemName = itemName;
             ItemTag = itemTag;
