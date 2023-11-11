@@ -81,6 +81,11 @@ namespace Farm_Group_Project
         {
             drone.CancelMoves();
         }
+
+        public void UpdateView(ICollection<IItemContainer> items)
+        {
+
+        }
         #endregion
     }
 }

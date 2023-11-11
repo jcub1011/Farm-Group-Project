@@ -4,8 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Farm_Group_Project"
+        xmlns:inv="clr-namespace:Farm_Group_Project.InventorySystem"
+        xmlns:vis="clr-namespace:Farm_Group_Project.VisualizationItems"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Canvas x:Name="TestContainer">
-    </Canvas>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <inv:InventoryView Grid.Row="0" Grid.Column="0" x:Name="Inventory"/>
+        <vis:FarmVisualizer Grid.Row="0" Grid.Column="1" x:Name="Visualizer"/>
+    </Grid>
 </Window>

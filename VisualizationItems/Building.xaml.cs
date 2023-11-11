@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Farm_Group_Project.InventorySystem;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +22,10 @@ namespace Farm_Group_Project.VisualizationItems
     /// <summary>
     /// Interaction logic for Building.xaml
     /// </summary>
-    public partial class Building : UserControl, IItemContainer
+    public partial class Building : UserControl, IInventoryItem
     {
+        private readonly Dictionary<IInventoryItem, UIElement> inventoryItemToElementMap = new();
+
         public Building(string itemName, string itemTag, double[] location, double[] dimensions, double price)
         {
             InitializeComponent();
@@ -31,16 +37,46 @@ namespace Farm_Group_Project.VisualizationItems
             Price = price;
         }
 
+        public static Building GenerateObject(IInventoryItem item)
+        {
+            var building = new Building(item.ItemName, item.ItemTag, item.Location, item.Dimensions, item.Price)
+            {
+                Children = item.Children
+            };
+            return building;
+        }
+
         #region Interface Implementations
-        public UIElementCollection ChildObjects => Content.Children;
+        public ObservableCollection<IInventoryItem>? Children
+        {
+            get
+            {
+                return (ObservableCollection<IInventoryItem>)Content.Children.Cast<IInventoryItem>();
+            }
+            set
+            {
+                throw new NotImplementedException($"{nameof(Building)}.{nameof(Children)} doens't support being reassigned.");
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public string ItemName
         {
             get => Title.Text;
-            set { Title.Text = value; }
+            set { Title.Text = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemName))); }
         }
 
-        public string ItemTag { get; set; }
+        string _itemName;
+        public string ItemTag
+        {
+            get => _itemName;
+            set
+            {
+                _itemName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemTag)));
+            }
+        }
 
         public double[] Location
         {
@@ -52,6 +88,7 @@ namespace Farm_Group_Project.VisualizationItems
             {
                 Canvas.SetLeft(this, value[0]);
                 Canvas.SetTop(this, value[1]);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Location)));
             }
         }
 
@@ -68,29 +105,40 @@ namespace Farm_Group_Project.VisualizationItems
                 Title.Width = value[0];
                 Content.Width = value[0];
                 Content.Height = value[1] - Title.Height;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Dimensions)));
             }
         }
 
-        public double Price { get; set; }
-
-        public void AddChild(IItem item)
+        double _price;
+        public double Price
         {
-            Content.Children.Add((UIElement) item);
+            get => _price;
+            set
+            {
+                _price = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Price)));
+            }
         }
 
-        public void AddChild(IItemContainer container)
+        public void AddChild(IInventoryItem item)
         {
-            Content.Children.Add((UIElement)container);
+            if (item.Children == null)
+            {
+                // Make object.
+                inventoryItemToElementMap.Add(item, FarmObject.GenerateObject(item));
+                Content.Children.Add(inventoryItemToElementMap[item]);
+            }
+            else
+            {
+                // Make building.
+                inventoryItemToElementMap.Add(item, GenerateObject(item));
+                Content.Children.Add(inventoryItemToElementMap[item]);
+            }
         }
 
-        public void RemoveChild(IItem item)
+        public void RemoveChild(IInventoryItem item)
         {
-            Content.Children.Remove((UIElement)item);
-        }
-
-        public void RemoveChild(IItemContainer container)
-        {
-            Content.Children.Remove((UIElement)container);
+            if (inventoryItemToElementMap.ContainsKey(item)) Content.Children.Remove(inventoryItemToElementMap[item]);
         }
         #endregion
     }

@@ -1,7 +1,10 @@
-﻿using Microsoft.VisualBasic;
+﻿using Farm_Group_Project.InventorySystem;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -17,12 +20,15 @@ namespace Farm_Group_Project.VisualizationItems
     /// <summary>
     /// Interaction logic for VirtualDrone.xaml
     /// </summary>
-    public partial class VirtualDrone : UserControl, IItem
+    public partial class VirtualDrone : UserControl, IInventoryItem
     {
         const double UPDATE_RATE = 60;
         bool _isMoving;
         bool _cancel;
         Queue<MoveCommand> _movesToComplete;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public ObservableCollection<IInventoryItem>? Children { get => null; set => throw new NotImplementedException("Drone doesn't support child objects."); }
 
         /// <summary>
         /// Location of object with respect to the parent container. Instantly transports the drone. 

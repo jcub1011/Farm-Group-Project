@@ -28,8 +28,6 @@ namespace Farm_Group_Project
         public MainWindow()
         {
             InitializeComponent();
-
-            TestContainer.Children.Add(new InventoryView());
         }
     }
 }

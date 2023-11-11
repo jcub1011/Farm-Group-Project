@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Farm_Group_Project.InventorySystem;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +21,7 @@ namespace Farm_Group_Project.VisualizationItems
     /// <summary>
     /// Interaction logic for FarmObject.xaml
     /// </summary>
-    public partial class FarmObject : UserControl, IItem
+    public partial class FarmObject : UserControl, IInventoryItem
     {
         public FarmObject(string itemName, string itemTag, double[] location, double[]dimensions, double price)
         {
@@ -31,14 +34,40 @@ namespace Farm_Group_Project.VisualizationItems
             Price = price;
         }
 
+        public ObservableCollection<IInventoryItem>? Children
+        {
+            get => null;
+            set => throw new NotImplementedException("Farm objects don't support children.");
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public static FarmObject GenerateObject(IInventoryItem item)
+        {
+            return new FarmObject(item.ItemName, item.ItemTag, item.Location, item.Dimensions, item.Price);
+        }
+
         #region Interface Implementations
         public string ItemName
         {
             get => ObjectName.Text;
-            set => ObjectName.Text = value;
+            set
+            {
+                ObjectName.Text = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemName)));
+            }
         }
 
-        public string ItemTag { get; set; }
+        string _itemTag;
+        public string ItemTag 
+        {
+            get => _itemTag;
+            set
+            {
+                _itemTag = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemTag)));
+            }
+        }
 
         public double[] Location
         {

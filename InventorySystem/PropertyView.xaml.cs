@@ -49,7 +49,7 @@ namespace Farm_Group_Project.InventorySystem
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemToModify)));
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public PropertyView()
         {
