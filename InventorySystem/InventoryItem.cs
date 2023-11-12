@@ -19,7 +19,11 @@ namespace Farm_Group_Project.InventorySystem
         double ItemWidth { get; set; }
         double ItemHeight { get; set; }
         double Price { get; set; }
-        ObservableCollection<IInventoryItem>? Children { get; set; }
+
+        /// <summary>
+        /// When null, object cannot carry children.
+        /// </summary>
+        ObservableCollection<IInventoryItem>? Children { get; }
     }
 
     public class InventoryItem: IInventoryItem
@@ -105,13 +109,24 @@ namespace Farm_Group_Project.InventorySystem
         public ObservableCollection<IInventoryItem>? Children
         {
             get => _children;
-            set
+            private set
             {
                 _children = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Children)));
             }
         }
 
+        /// <summary>
+        /// Creates a new inventory item.
+        /// </summary>
+        /// <param name="itemName">Name of the item.</param>
+        /// <param name="itemTag">Tag of the item.</param>
+        /// <param name="x">X postion.</param>
+        /// <param name="y">Y position.</param>
+        /// <param name="width">Width of the item.</param>
+        /// <param name="height">Height of the item.</param>
+        /// <param name="price">Price of the item.</param>
+        /// <param name="children">Children of the item. If left null the item cannot contain children.</param>
         public InventoryItem(string itemName, string itemTag, double x, double y, double width, double height, double price, ObservableCollection<IInventoryItem>? children = null)
         {
             ItemName = itemName;
@@ -121,7 +136,7 @@ namespace Farm_Group_Project.InventorySystem
             ItemWidth = width;
             ItemHeight = height;
             Price = price;
-            Children = children ?? new();
+            Children = children;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

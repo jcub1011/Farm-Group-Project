@@ -31,13 +31,13 @@ namespace Farm_Group_Project
             InitializeComponent();
 
             // Code for testing.
-            var building = new InventoryItem("Building 1", Tags.Building, 30, 100, 400, 100, 10000);
-            var building2 = new InventoryItem("Building 2", Tags.Building, 10, 10, 90, 90, 10000);
+            var building = new InventoryItem("Building 1", Tags.Building, 30, 100, 400, 100, 10000, new());
+            var building2 = new InventoryItem("Building 2", Tags.Building, 10, 10, 90, 90, 10000, new());
             var item1 = new InventoryItem("Item 1", Tags.Equipment, 10, 10, 50, 50, 10);
             var item2 = new InventoryItem("Item 2", Tags.Equipment, 30, 10, 50, 50, 10);
             var item3 = new InventoryItem("Item 3", Tags.Equipment, 10, 10, 50, 50, 10);
 
-            var building3 = new InventoryItem("Building 3", Tags.Building, 450, 100, 100, 100, 10000);
+            var building3 = new InventoryItem("Building 3", Tags.Building, 450, 100, 100, 100, 10000, new());
 
             building.Children.Add(building2);
             building.Children.Add(item2);
