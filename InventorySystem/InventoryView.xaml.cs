@@ -33,12 +33,6 @@ namespace Farm_Group_Project.InventorySystem
             set => RemoveButton.IsEnabled = value;
         }
 
-        private bool AddChildIsEnabled
-        {
-            get => AddChildButton.IsEnabled;
-            set => AddChildButton.IsEnabled = value;
-        }
-
         public ObservableCollection<IInventoryItem> Source
         {
             get => (ObservableCollection<IInventoryItem>)GetValue(SourceProperty);
@@ -74,12 +68,12 @@ namespace Farm_Group_Project.InventorySystem
                     var displayValues = new InventoryItem(drone.ItemName, drone.ItemTag, drone.X, drone.Y, drone.Width, drone.Height, drone.Price);
                     PropertyShower.ItemToModify = displayValues;
                     RemoveIsEnabled = false;
-                    AddChildIsEnabled = false;
+                    ItemMaker.CanAddChild = false;
                 }
                 else
                 {
                     RemoveIsEnabled = true;
-                    AddChildIsEnabled = TagEvaluator.IsChildCarryingTag(((IInventoryItem)ContentContainer.SelectedItem).ItemTag);
+                    ItemMaker.CanAddChild = TagEvaluator.IsChildCarryingTag(((IInventoryItem)ContentContainer.SelectedItem).ItemTag);
                     PropertyShower.DisablePropertyModification = false;
                     PropertyShower.ItemToModify = (InventoryItem)ContentContainer.SelectedItem;
                 }
@@ -167,18 +161,6 @@ namespace Farm_Group_Project.InventorySystem
             }
 
             return null;
-        }
-
-        private void OnAddChild(object sender, RoutedEventArgs e)
-        {
-            if (ContentContainer.SelectedItem == null) return;
-
-
-        }
-
-        private void OnAddRoot(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
