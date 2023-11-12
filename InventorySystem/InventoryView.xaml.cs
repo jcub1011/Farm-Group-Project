@@ -81,6 +81,19 @@ namespace Farm_Group_Project.InventorySystem
             };
 
             Source ??= new();
+
+            // Subscribe to ItemGenerator.
+            ItemMaker.OnItemCreatedChild += (e) =>
+            {
+                if (ContentContainer.SelectedItem != null)
+                {
+                    ((IInventoryItem)ContentContainer.SelectedItem).Children?.Add(e);
+                }
+            };
+            ItemMaker.OnItemCreatedRoot += (e) =>
+            {
+                Source.Add(e);
+            };
         }
 
         ~InventoryView()

@@ -51,6 +51,7 @@ namespace Farm_Group_Project.InventorySystem
 
         private void OnAddChild(object sender, RoutedEventArgs e)
         {
+            if (ItemPropertyViewer.ItemToModify == null) return;
             OnItemCreatedChild?.Invoke(new InventoryItem(ItemPropertyViewer.ItemToModify.ItemName,
                 ItemPropertyViewer.ItemToModify.ItemTag,
                 ItemPropertyViewer.ItemToModify.X,
@@ -62,6 +63,7 @@ namespace Farm_Group_Project.InventorySystem
 
         private void OnAddRoot(object sender, RoutedEventArgs e)
         {
+            if (ItemPropertyViewer.ItemToModify == null) return;
             OnItemCreatedRoot?.Invoke(new InventoryItem(ItemPropertyViewer.ItemToModify.ItemName,
                 ItemPropertyViewer.ItemToModify.ItemTag,
                 ItemPropertyViewer.ItemToModify.X,

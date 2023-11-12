@@ -77,6 +77,10 @@ namespace Farm_Group_Project.InventorySystem
                         if (value.ItemTag != Tags.Drone && TagList.Contains(Tags.Drone)) TagList.Remove(Tags.Drone);
                         else if (value.ItemTag == Tags.Drone) TagList.Add(Tags.Drone);
                     }
+                    else
+                    {
+                        if (TagList.Contains(Tags.Drone)) TagList.Remove(Tags.Drone);
+                    }
                 }
                 _itemToModify = value;
                 
