@@ -11,6 +11,7 @@
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -18,6 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <inv:InventoryView Grid.Row="0" Grid.Column="0" x:Name="Inventory"/>
-        <vis:FarmVisualizer Grid.Row="0" Grid.Column="1" x:Name="Visualizer"/>
+        
+        <vis:FarmVisualizer Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="Visualizer"/>
     </Grid>
 </Window>

@@ -28,13 +28,12 @@ namespace Farm_Group_Project.VisualizationItems
         Queue<MoveCommand> _movesToComplete;
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public ObservableCollection<IInventoryItem>? Children { get => null; set => throw new NotImplementedException("Drone doesn't support child objects."); }
 
         /// <summary>
-        /// Location of object with respect to the parent container. Instantly transports the drone. 
-        /// Use MoveTo to ease drone to a different location.
-        /// Array must have a length of 2 { x, y }.
+        /// This object cannot contain children. It always returns null and this value cannot be set.
         /// </summary>
+        public ObservableCollection<IInventoryItem>? Children { get => null; set => throw new NotImplementedException("Drone doesn't support child objects."); }
+
         public double[] Location
         {
             get
@@ -87,6 +86,8 @@ namespace Farm_Group_Project.VisualizationItems
             ItemTag = itemTag;
             Location = location;
             Price = price;
+
+            Canvas.SetZIndex(this, 10000);
         }
 
         public void CancelMoves()

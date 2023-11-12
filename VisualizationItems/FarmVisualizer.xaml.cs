@@ -18,12 +18,6 @@ using System.Windows.Shapes;
 
 namespace Farm_Group_Project.VisualizationItems
 {
-    public interface IInventoryItemContainer
-    {
-        public void Add(IInventoryItem item);
-        public void Remove(IInventoryItem item);
-    }
-
     /// <summary>
     /// Interaction logic for FarmVisualizer.xaml
     /// </summary>
@@ -43,6 +37,9 @@ namespace Farm_Group_Project.VisualizationItems
             UpdateView();
         }
 
+        /// <summary>
+        /// Call this to refresh the view.
+        /// </summary>
         public void UpdateView()
         {
             ContentHolder.Children.Clear();
@@ -58,25 +55,5 @@ namespace Farm_Group_Project.VisualizationItems
         {
             UpdateView();
         }
-
-        /*
-        public static void Populate(IInventoryItemContainer container, IEnumerable<IInventoryItem> items)
-        {
-            foreach (var item in items)
-            {
-                switch (item.Children == null)
-                {
-                    case true:
-                        Building building = Building.GenerateObject(item);
-                        if (building.Children != null) Populate(building, building.Children);
-                        container.Add(building);
-                        break;
-                    case false:
-                        FarmObject obj = FarmObject.GenerateObject(item);
-                        container.Add(obj);
-                        break;
-                }
-            }
-        }*/
     }
 }

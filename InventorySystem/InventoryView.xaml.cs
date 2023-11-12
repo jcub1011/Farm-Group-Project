@@ -62,6 +62,7 @@ namespace Farm_Group_Project.InventorySystem
             Dispose();
         }
 
+        // Handles the removal or addition of items in the tree.
         private void OnCollectionChange(object? sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
