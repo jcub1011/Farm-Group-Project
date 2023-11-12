@@ -162,5 +162,11 @@ namespace Farm_Group_Project.InventorySystem
 
             return null;
         }
+
+        private void OnRightClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ContentContainer.SelectedItem == null || ((IInventoryItem)ContentContainer.SelectedItem).ItemTag == Tags.Drone) return;
+            ItemMaker.SetGeneratorValues((IInventoryItem)ContentContainer.SelectedItem);
+        }
     }
 }

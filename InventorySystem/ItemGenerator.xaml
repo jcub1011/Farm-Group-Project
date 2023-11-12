@@ -10,8 +10,8 @@
         <TextBlock Grid.Row="0" FontWeight="Bold" Padding="2">- Item Generator -</TextBlock>
         <local:PropertyView Grid.Row="1" x:Name="ItemPropertyViewer"/>
         <StackPanel Orientation="Horizontal">
-            <Button Click="OnAddChild" x:Name="AddChildButton">Add Child Item</Button>
-            <Button Click="OnAddRoot">Add Root Item</Button>
+            <Button Click="OnAddChild" x:Name="AddChildButton">Add Item as Child</Button>
+            <Button Click="OnAddRoot">Add Item as Root</Button>
         </StackPanel>
     </StackPanel>
 </UserControl>

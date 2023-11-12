@@ -26,6 +26,19 @@ namespace Farm_Group_Project.InventorySystem
             ItemPropertyViewer.ItemToModify = new("default", "default", 0, 0, 0, 0, 0);
         }
 
+        public void SetGeneratorValues(IInventoryItem item)
+        {
+            var temp = new InventoryItem(
+                item.ItemName,
+                item.ItemTag,
+                item.X,
+                item.Y,
+                item.ItemWidth,
+                item.ItemHeight,
+                item.Price);
+            ItemPropertyViewer.ItemToModify = temp;
+        }
+
         public delegate void ItemCreated(IInventoryItem item);
         public event ItemCreated OnItemCreatedChild;
         public event ItemCreated OnItemCreatedRoot;
