@@ -44,7 +44,6 @@ namespace Farm_Group_Project.VisualizationItems
         /// </summary>
         public void UpdateView()
         {
-            DroneOverlay.Children.Clear();
             Drone = null;
             ContentHolder.Children.Clear();
             if (Source == null)
