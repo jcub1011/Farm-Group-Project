@@ -27,6 +27,18 @@ namespace Farm_Group_Project.InventorySystem
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(nameof(Source), typeof(ObservableCollection<IInventoryItem>), typeof(VisualObject));
         private bool disposedValue;
 
+        private bool RemoveIsEnabled
+        {
+            get => RemoveButton.IsEnabled;
+            set => RemoveButton.IsEnabled = value;
+        }
+
+        private bool AddChildIsEnabled
+        {
+            get => AddChildButton.IsEnabled;
+            set => AddChildButton.IsEnabled = value;
+        }
+
         public ObservableCollection<IInventoryItem> Source
         {
             get => (ObservableCollection<IInventoryItem>)GetValue(SourceProperty);
@@ -61,9 +73,13 @@ namespace Farm_Group_Project.InventorySystem
                     var drone = (VirtualDrone)ContentContainer.SelectedItem;
                     var displayValues = new InventoryItem(drone.ItemName, drone.ItemTag, drone.X, drone.Y, drone.Width, drone.Height, drone.Price);
                     PropertyShower.ItemToModify = displayValues;
+                    RemoveIsEnabled = false;
+                    AddChildIsEnabled = false;
                 }
                 else
                 {
+                    RemoveIsEnabled = true;
+                    AddChildIsEnabled = TagEvaluator.IsChildCarryingTag(((IInventoryItem)ContentContainer.SelectedItem).ItemTag);
                     PropertyShower.DisablePropertyModification = false;
                     PropertyShower.ItemToModify = (InventoryItem)ContentContainer.SelectedItem;
                 }
@@ -119,6 +135,50 @@ namespace Farm_Group_Project.InventorySystem
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        private void OnRemove(object sender, RoutedEventArgs e)
+        {
+            if (ContentContainer.SelectedItem == null) return;
+            if (((IInventoryItem)ContentContainer.SelectedItem).ItemTag == Tags.Drone) return;
+
+            var result = FindParentContainer((IInventoryItem)ContentContainer.SelectedItem, Source);
+            if (result == null) return;
+            result.Remove((IInventoryItem)ContentContainer.SelectedItem);
+            Debug.WriteLine($"Removed {((IInventoryItem)ContentContainer.SelectedItem).ItemName}.");
+        }
+
+        /// <summary>
+        /// Find target using dfs.
+        /// </summary>
+        /// <param name="target">Item to find.</param>
+        /// <param name="source">Collection to search in.</param>
+        /// <returns>Collection containing target or null if not found.</returns>
+        private static ObservableCollection<IInventoryItem>? FindParentContainer(IInventoryItem target, ObservableCollection<IInventoryItem> source)
+        {
+            foreach(var item in source)
+            {
+                if (ReferenceEquals(item, target)) return source;
+                else if (item.Children != null)
+                {
+                    var result = FindParentContainer(target, item.Children);
+                    if (result != null) return result;
+                }
+            }
+
+            return null;
+        }
+
+        private void OnAddChild(object sender, RoutedEventArgs e)
+        {
+            if (ContentContainer.SelectedItem == null) return;
+
+
+        }
+
+        private void OnAddRoot(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

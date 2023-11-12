@@ -23,5 +23,10 @@
             </TreeView.ItemTemplate>
         </TreeView>
         <local:PropertyView x:Name="PropertyShower"/>
+        <Button Click="OnRemove" x:Name="RemoveButton">Remove Item</Button>
+        <StackPanel Orientation="Horizontal">
+            <Button Click="OnAddChild" x:Name="AddChildButton">Add Child Item</Button>
+            <Button Click="OnAddRoot">Add Root Item</Button>
+        </StackPanel>
     </StackPanel>
 </UserControl>

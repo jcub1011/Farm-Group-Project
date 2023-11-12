@@ -126,7 +126,7 @@ namespace Farm_Group_Project.InventorySystem
         /// <param name="width">Width of the item.</param>
         /// <param name="height">Height of the item.</param>
         /// <param name="price">Price of the item.</param>
-        /// <param name="children">Children of the item. If left null the item cannot contain children.</param>
+        /// <param name="children">Children of the item.</param>
         public InventoryItem(string itemName, string itemTag, double x, double y, double width, double height, double price, ObservableCollection<IInventoryItem>? children = null)
         {
             ItemName = itemName;
@@ -136,7 +136,8 @@ namespace Farm_Group_Project.InventorySystem
             ItemWidth = width;
             ItemHeight = height;
             Price = price;
-            Children = children;
+            if (TagEvaluator.IsChildCarryingTag(itemTag)) Children = children ?? new ObservableCollection<IInventoryItem>();
+            else Children = null;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
