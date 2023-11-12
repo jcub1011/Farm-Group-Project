@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Farm_Group_Project.VisualizationItems;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Windows;
 using System.Windows.Controls;
@@ -65,16 +69,55 @@ namespace Farm_Group_Project.InventorySystem
             get => _itemToModify;
             set
             {
+                // Prevent changing to drone when the item wasn't already a drone.
+                if (TagList != null)
+                {
+                    if (value != null)
+                    {
+                        if (value.ItemTag != Tags.Drone && TagList.Contains(Tags.Drone)) TagList.Remove(Tags.Drone);
+                        else if (value.ItemTag == Tags.Drone) TagList.Add(Tags.Drone);
+                    }
+                }
                 _itemToModify = value;
                 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemToModify)));
+
+                if (_itemToModify == null) return;
+                // Disable tag editing if its a drone.
+                IsTagChangeable = !(Tags.Drone == _itemToModify.ItemTag);
             }
         }
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        ObservableCollection<string>? _tagList;
+        public ObservableCollection<string>? TagList
+        {
+            get => _tagList;
+            set
+            {
+                _tagList = value;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TagList)));
+            }
+        }
+
+        private bool IsTagChangeable
+        {
+            get => TagComboBox.IsEnabled;
+            set => TagComboBox.IsEnabled = value;
+        }
+
         public PropertyView()
         {
+            TagList = TagEvaluator.GetTagList();
             InitializeComponent();
+            IsTagChangeable = false;
+        }
+
+        private void OnTagSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Debug.WriteLine("tag changed");
+            // if (preventChangingToDrone && e.AddedItems.Contains(Tags.Drone)) TagComboBox.Text = e.RemovedItems.Cast<string>().FirstOrDefault("default");
         }
     }
 }

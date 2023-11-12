@@ -1,6 +1,7 @@
 ﻿using Farm_Group_Project.InventorySystem;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -30,6 +31,21 @@ namespace Farm_Group_Project.VisualizationItems
                 Tags.Building => true,
                 _ => false,
             };
+        }
+
+        public static ObservableCollection<string> GetTagList()
+        {
+            var tags = typeof(Tags).GetFields();
+            var list = new ObservableCollection<string>();
+            var temp = new Tags();
+
+            foreach ( var tag in tags)
+            {
+                if (tag.GetValue(temp) is not string result) continue;
+                list.Add(result);
+            }
+
+            return list;
         }
     }
 }

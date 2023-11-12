@@ -30,7 +30,8 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Padding="10 0">Item Name:</TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.ItemName, Mode=TwoWay}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Padding="10 0">Item Tag:</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.ItemTag, Mode=TwoWay}" IsReadOnly="{Binding DisablePropertyModification}"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.ItemTag, Mode=TwoWay}" IsReadOnly="{Binding DisablePropertyModification}" IsEditable="False"
+                  ItemsSource="{Binding TagList}" SelectionChanged="OnTagSelectionChanged" x:Name="TagComboBox"/>
         <TextBlock Grid.Row="3" Grid.Column="0" Padding="10 0">Location:</TextBlock>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ItemToModify.X, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding ItemToModify.Y, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
