@@ -14,8 +14,10 @@ namespace Farm_Group_Project.InventorySystem
     {
         string ItemName { get; set; }
         string ItemTag { get; set; }
-        double[] Location { get; set; }
-        double[] Dimensions { get; set; }
+        double X { get; set; }
+        double Y { get; set; }
+        double ItemWidth { get; set; }
+        double ItemHeight { get; set; }
         double Price { get; set; }
         ObservableCollection<IInventoryItem>? Children { get; set; }
     }
@@ -44,27 +46,47 @@ namespace Farm_Group_Project.InventorySystem
             }
         }
 
-        double[] _location;
-        public double[] Location
+        double _x;
+        public double X
         {
-            get => _location;
+            get => _x;
             set
             {
-                if (value.Length != 2) throw new ArgumentException("Location must be an array of length 2 of format { x, y }.");
-                _location = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Location)));
+                _x = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(X)));
             }
         }
 
-        double[] _dimensions;
-        public double[] Dimensions
+        double _y;
+        public double Y
         {
-            get => _dimensions;
+            get => _y;
             set
             {
-                if (value.Length != 2) throw new ArgumentException("Dimension must be an array of length 2 of format { width, height }.");
-                _dimensions = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Dimensions)));
+                _y = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Y)));
+            }
+        }
+
+        double _itemWidth;
+        public double ItemWidth
+        {
+            get => _itemWidth;
+            set
+            {
+                _itemWidth = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemWidth)));
+            }
+        }
+
+        double _itemHeight;
+        public double ItemHeight
+        {
+            get => _itemHeight;
+            set
+            {
+                _itemHeight = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemHeight)));
             }
         }
 
@@ -90,12 +112,14 @@ namespace Farm_Group_Project.InventorySystem
             }
         }
 
-        public InventoryItem(string itemName, string itemTag, double[] location, double[] dims, double price, ObservableCollection<IInventoryItem>? children = null)
+        public InventoryItem(string itemName, string itemTag, double x, double y, double width, double height, double price, ObservableCollection<IInventoryItem>? children = null)
         {
             ItemName = itemName;
             ItemTag = itemTag;
-            Location = location;
-            Dimensions = dims;
+            X = x;
+            Y = y;
+            ItemWidth = width;
+            ItemHeight = height;
             Price = price;
             Children = children ?? new();
         }

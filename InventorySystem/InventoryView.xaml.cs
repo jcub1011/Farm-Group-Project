@@ -47,10 +47,26 @@ namespace Farm_Group_Project.InventorySystem
         {
             InitializeComponent();
 
+            if (ContentContainer.SelectedItem != null && ContentContainer.SelectedItem.GetType() == typeof(VirtualDrone))
+            {
+                PropertyShower.DisablePropertyModification = true;
+            }
+
             PropertyShower.ItemToModify = (InventoryItem)ContentContainer.SelectedItem;
             ContentContainer.SelectedItemChanged += (_, _) =>
             {
-                PropertyShower.ItemToModify = (InventoryItem)ContentContainer.SelectedItem;
+                if (ContentContainer.SelectedItem.GetType() == typeof(VirtualDrone))
+                {
+                    PropertyShower.DisablePropertyModification = true;
+                    var drone = (VirtualDrone)ContentContainer.SelectedItem;
+                    var displayValues = new InventoryItem(drone.ItemName, drone.ItemTag, drone.X, drone.Y, drone.Width, drone.Height, drone.Price);
+                    PropertyShower.ItemToModify = displayValues;
+                }
+                else
+                {
+                    PropertyShower.DisablePropertyModification = false;
+                    PropertyShower.ItemToModify = (InventoryItem)ContentContainer.SelectedItem;
+                }
                 Debug.WriteLine("New item selected.");
             };
 

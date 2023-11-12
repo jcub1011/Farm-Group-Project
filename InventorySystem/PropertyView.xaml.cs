@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Reflection.Metadata;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -47,6 +48,17 @@ namespace Farm_Group_Project.InventorySystem
     /// </summary>
     public partial class PropertyView : UserControl, INotifyPropertyChanged
     {
+        bool _disablePropertyModification;
+        public bool DisablePropertyModification
+        {
+            get => _disablePropertyModification;
+            set
+            {
+                _disablePropertyModification = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisablePropertyModification)));
+            }
+        }
+
         InventoryItem? _itemToModify;
         public InventoryItem? ItemToModify
         {
@@ -54,7 +66,6 @@ namespace Farm_Group_Project.InventorySystem
             set
             {
                 _itemToModify = value;
-                Debug.WriteLine($"New item has been set. {PropertyChanged}");
                 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemToModify)));
             }

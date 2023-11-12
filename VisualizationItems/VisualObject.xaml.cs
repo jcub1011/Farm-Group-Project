@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,20 +24,31 @@ namespace Farm_Group_Project.VisualizationItems
     /// </summary>
     public partial class VisualObject : UserControl
     {
-        public static readonly DependencyProperty ItemNameProperty = DependencyProperty.Register(nameof(ItemName), typeof(string), typeof(VisualObject));
-        /// <summary>
-        /// Name displayed above the object.
-        /// </summary>
-        public string ItemName
+        public double X
         {
-            get => (string)GetValue(ItemNameProperty);
-            set => SetValue(ItemNameProperty, value);
+            get => Canvas.GetLeft(this);
+            set => Canvas.SetLeft(this, value);
         }
 
-        public VisualObject()
+        public double Y
         {
-            InitializeComponent();
+            get => Canvas.GetTop(this);
+            set => Canvas.SetTop(this, value);
         }
+
+        public double ItemWidth
+        {
+            get => ContentHolder.Width;
+            set => ContentHolder.Width = value;
+        }
+
+        public double ItemHeight
+        {
+            get => ContentHolder.Height;
+            set => ContentHolder.Height = value;
+        }
+
+        public string ItemTag { get; private set; }
 
         /// <summary>
         /// Creates a visual object based on an inventory item.
@@ -47,12 +59,11 @@ namespace Farm_Group_Project.VisualizationItems
             InitializeComponent();
 
             DisplayText.Text = item.ItemName;
-
-            ContentHolder.Width = item.Dimensions[0];
-            ContentHolder.Height = item.Dimensions[1];
-
-            Canvas.SetLeft(this, item.Location[0]);
-            Canvas.SetTop(this, item.Location[1]);
+            ItemTag = item.ItemTag;
+            X = item.X;
+            Y = item.Y;
+            ItemWidth = item.ItemWidth;
+            ItemHeight = item.ItemHeight;
 
             if (item.Children != null)
             {
@@ -61,6 +72,32 @@ namespace Farm_Group_Project.VisualizationItems
                     ContentHolder.Children.Add(new VisualObject(child));
                 }
             }
+
+            // Subscribe Property Changed
+            item.PropertyChanged += (_, e) =>
+            {
+                Debug.WriteLine($"Property changed: {e.PropertyName}");
+                switch(e.PropertyName)
+                {
+                    case nameof(item.ItemName):
+                        DisplayText.Text = item.ItemName;
+                        break;
+                    case nameof(item.X):
+                        X = item.X;
+                        break;
+                    case nameof(item.Y):
+                        Y = item.Y;
+                        break;
+                    case nameof(item.ItemWidth):
+                        ItemWidth = item.ItemWidth;
+                        break;
+                    case nameof(item.ItemHeight):
+                        ItemHeight = item.ItemHeight;
+                        break;
+                    default:
+                        break;
+                }
+            };
         }
     }
 }

@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Farm_Group_Project.VisualizationItems"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+             d:DesignHeight="450" d:DesignWidth="800">
     <Border>
         <Grid Background="Gray">
             <Grid.ColumnDefinitions>

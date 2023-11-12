@@ -28,16 +28,16 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" FontWeight="Bold">Properties</TextBlock>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Padding="10 0">Item Name:</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.ItemName, Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.ItemName, Mode=TwoWay}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Padding="10 0">Item Tag:</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.ItemTag, Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.ItemTag, Mode=TwoWay}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBlock Grid.Row="3" Grid.Column="0" Padding="10 0">Location:</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ItemToModify.Location[0], Converter={StaticResource dblToStr}}"/>
-        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding ItemToModify.Location[1], Converter={StaticResource dblToStr}}"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ItemToModify.X, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding ItemToModify.Y, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBlock Grid.Row="4" Grid.Column="0" Padding="10 0">Dimensions:</TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ItemToModify.Dimensions[0], Converter={StaticResource dblToStr}}"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding ItemToModify.Dimensions[1], Converter={StaticResource dblToStr}}"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ItemToModify.ItemWidth, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding ItemToModify.ItemHeight, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Padding="10 0">Price:</TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.Price, Converter={StaticResource dblToStr}}"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.Price, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
     </Grid>
 </UserControl>

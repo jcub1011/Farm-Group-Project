@@ -13,69 +13,84 @@ namespace Farm_Group_Project.VisualizationItems
 {
     internal struct MoveCommand
     {
-        public double[] Coordinates { get; set; }
+        public double TargetX { get; set; }
+        public double TargetY { get; set; }
         public double Velocity { get; set; }
     }
 
     /// <summary>
     /// Interaction logic for VirtualDrone.xaml
     /// </summary>
-    public partial class VirtualDrone : UserControl, IInventoryItem
+    public partial class VirtualDrone : UserControl, IInventoryItem, INotifyPropertyChanged
     {
         const double UPDATE_RATE = 60;
         bool _isMoving;
         bool _cancel;
         Queue<MoveCommand> _movesToComplete;
-
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Raised whenever the postion of the drone is changed.
+        /// </summary>
+        public event EventHandler UpdateCanvas;
 
         /// <summary>
         /// This object cannot contain children. It always returns null and this value cannot be set.
         /// </summary>
         public ObservableCollection<IInventoryItem>? Children { get => null; set => throw new NotImplementedException("Drone doesn't support child objects."); }
 
-        public double[] Location
+        public double X
         {
-            get
-            {
-                return new double[2] { Canvas.GetLeft(this), Canvas.GetTop(this) };
-            }
+            get => Canvas.GetLeft(this);
             set
             {
-                if (value.Length != 2) throw new Exception("Array must have a length of 2. Ex { x, y }.");
-                Canvas.SetLeft(this, value[0]);
-                Canvas.SetTop(this, value[1]);
+                Canvas.SetLeft(this, value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(X)));
+            }
+        }
+
+        public double Y
+        {
+            get => Canvas.GetTop(this);
+            set
+            {
+                Canvas.SetTop(this, value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Y)));
             }
         }
 
         public string ItemName
         {
             get => DroneName.Text;
-            set => DroneName.Text = value;
+            set
+            {
+                DroneName.Text = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemName)));
+            }
         }
 
         public string ItemTag { get; set; } = Tags.Drone;
 
-        public double[] Dimensions
+        public double ItemWidth
         {
-            get
-            {
-                return new double[] { Width, Height };
-            }
-            set
-            {
-                throw new Exception("Drones can't have their dimensions edited.");
-            }
+            get => Width;
+            set => throw new NotImplementedException("Drones can't have their dimensions changed.");
+        }
+
+        public double ItemHeight
+        {
+            get => Height;
+            set => throw new NotImplementedException("Drones can't have their dimensions changed.");
         }
 
         public double Price { get; set; }
 
-        double GetDistance(double[] coords1, double[] coords2)
+        double GetDistance(double x1, double y1, double x2, double y2)
         {
-            return Math.Sqrt(Math.Pow(coords2[0] - coords1[0], 2) + Math.Pow(coords2[1] - coords1[1], 2));
+            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
         }
 
-        public VirtualDrone(string itemName, string itemTag, double[] location, double price)
+        public VirtualDrone(string itemName, string itemTag, double x, double y, double price)
         {
             InitializeComponent();
             _isMoving = false;
@@ -84,8 +99,25 @@ namespace Farm_Group_Project.VisualizationItems
 
             ItemName = itemName;
             ItemTag = itemTag;
-            Location = location;
+            X = x;
+            Y = y;
             Price = price;
+
+            Canvas.SetZIndex(this, 10000);
+        }
+
+        public VirtualDrone(IInventoryItem item)
+        {
+            InitializeComponent();
+            _isMoving = false;
+            _cancel = false;
+            _movesToComplete = new();
+
+            ItemName = item.ItemName;
+            ItemTag = item.ItemTag;
+            X = item.X;
+            Y = item.Y;
+            Price = item.Price;
 
             Canvas.SetZIndex(this, 10000);
         }
@@ -104,14 +136,15 @@ namespace Farm_Group_Project.VisualizationItems
         /// </summary>
         /// <param name="coords">Target position.</param>
         /// <param name="velocity">Pixels per second.</param>
-        public async void MoveTo(double[] coords, double velocity)
+        public async void MoveTo(double newX, double newY, double velocity)
         {
             // Checks if the drone is busy and queues the command if it is.
             if (_isMoving)
             {
                 _movesToComplete.Enqueue(new MoveCommand()
                 {
-                    Coordinates = coords,
+                    TargetX = newX,
+                    TargetY = newY,
                     Velocity = velocity
                 });
                 return;
@@ -119,13 +152,13 @@ namespace Farm_Group_Project.VisualizationItems
             _isMoving = true;
 
             // Calcuate how many pixels to move each update.
-            double seconds = GetDistance(Location, coords) / velocity;
+            double seconds = GetDistance(X, Y, newX, newY) / velocity;
 
             long fullTicksToComplete = (long)(seconds * UPDATE_RATE);
             double ticksToComplete = (long)(seconds * UPDATE_RATE);
 
-            double deltaX = (coords[0] - Location[0]) / ticksToComplete;
-            double deltaY = (coords[1] - Location[1]) / ticksToComplete;
+            double deltaX = (newX - X) / ticksToComplete;
+            double deltaY = (newY - Y) / ticksToComplete;
 
             while (fullTicksToComplete > 0)
             {
@@ -136,18 +169,20 @@ namespace Farm_Group_Project.VisualizationItems
                     return;
                 }
 
-                Location = new double[2] { Location[0] + deltaX, Location[1] + deltaY };
+                X += deltaX;
+                Y += deltaY;
                 await Task.Delay((int)(1 / UPDATE_RATE * 1000));
                 fullTicksToComplete--;
             }
 
             _isMoving = false;
-            Location = coords;
+            X = newX;
+            Y = newY;
 
             if (_movesToComplete.Count > 0)
             {
                 var next = _movesToComplete.Dequeue();
-                MoveTo(next.Coordinates, next.Velocity);
+                MoveTo(next.TargetX, next.TargetY, next.Velocity);
             }
         }
     }
