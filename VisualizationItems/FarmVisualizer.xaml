@@ -19,7 +19,9 @@
 
             <TextBlock Text="Farm Visualizer" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Padding="5"/>
             <Button Grid.Row="0" Grid.Column="1" FontWeight="Bold" Padding="5" Click="Button_Click">Click Here To Refresh View</Button>
-            <Canvas Background="White" x:Name="ContentHolder" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Grid Background="White" x:Name="ContentHolder" Width="Auto" Height="Auto"/>
+            </ScrollViewer>
         </Grid>
     </Border>
 </UserControl>

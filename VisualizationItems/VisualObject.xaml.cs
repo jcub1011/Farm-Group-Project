@@ -26,26 +26,26 @@ namespace Farm_Group_Project.VisualizationItems
     {
         public double X
         {
-            get => Canvas.GetLeft(this);
-            set => Canvas.SetLeft(this, value);
+            get => Margin.Left;
+            set => Margin = new Thickness(value, Y, 0, 0);
         }
 
         public double Y
         {
-            get => Canvas.GetTop(this);
-            set => Canvas.SetTop(this, value);
+            get => Margin.Top;
+            set => Margin = new Thickness(X, value, 0, 0);
         }
 
         public double ItemWidth
         {
-            get => ContentHolder.Width;
-            set => ContentHolder.Width = value;
+            get => ContentHolder.MinWidth;
+            set => ContentHolder.MinWidth = value;
         }
 
         public double ItemHeight
         {
-            get => ContentHolder.Height;
-            set => ContentHolder.Height = value;
+            get => ContentHolder.MinHeight;
+            set => ContentHolder.MinHeight = value;
         }
 
         public string ItemTag { get; private set; }

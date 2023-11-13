@@ -87,7 +87,11 @@ namespace Farm_Group_Project.InventorySystem
             {
                 if (ContentContainer.SelectedItem != null)
                 {
-                    ((IInventoryItem)ContentContainer.SelectedItem).Children?.Add(e);
+                    var item = (IInventoryItem)ContentContainer.SelectedItem;
+                    Debug.WriteLine(item.Children.Count);
+                    item.Children.Add(e);
+                    Debug.WriteLine("Child added.");
+                    Debug.WriteLine(item.Children.Count);
                 }
             };
             ItemMaker.OnItemCreatedRoot += (e) =>

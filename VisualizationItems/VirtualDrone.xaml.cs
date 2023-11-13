@@ -41,20 +41,20 @@ namespace Farm_Group_Project.VisualizationItems
 
         public double X
         {
-            get => Canvas.GetLeft(this);
+            get => Margin.Left;
             set
             {
-                Canvas.SetLeft(this, value);
+                Margin = new System.Windows.Thickness(value, Y, 0, 0);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(X)));
             }
         }
 
         public double Y
         {
-            get => Canvas.GetTop(this);
+            get => Margin.Top;
             set
             {
-                Canvas.SetTop(this, value);
+                Margin = new System.Windows.Thickness(X, value, 0, 0);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Y)));
             }
         }
@@ -73,13 +73,13 @@ namespace Farm_Group_Project.VisualizationItems
 
         public double ItemWidth
         {
-            get => Width;
+            get => ActualWidth;
             set => throw new NotImplementedException("Drones can't have their dimensions changed.");
         }
 
         public double ItemHeight
         {
-            get => Height;
+            get => ActualHeight;
             set => throw new NotImplementedException("Drones can't have their dimensions changed.");
         }
 
@@ -103,7 +103,7 @@ namespace Farm_Group_Project.VisualizationItems
             Y = y;
             Price = price;
 
-            Canvas.SetZIndex(this, 10000);
+            // Canvas.SetZIndex(this, 10000);
         }
 
         public VirtualDrone(IInventoryItem item)

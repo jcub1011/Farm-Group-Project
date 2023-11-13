@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Farm_Group_Project.VisualizationItems"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="80">
-    <Grid Background="White">
+    <Grid Background="White" Width="80" Height="40">
         <Border BorderThickness="5" BorderBrush="Black">
             <TextBlock FontSize="20" FontWeight="Bold" Text="Drone" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="DroneName"/>
         </Border>

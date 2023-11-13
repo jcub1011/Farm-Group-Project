@@ -39,7 +39,7 @@ namespace Farm_Group_Project.InventorySystem
             ItemPropertyViewer.ItemToModify = temp;
         }
 
-        public delegate void ItemCreated(IInventoryItem item);
+        public delegate void ItemCreated(InventoryItem item);
         public event ItemCreated OnItemCreatedChild;
         public event ItemCreated OnItemCreatedRoot;
 
