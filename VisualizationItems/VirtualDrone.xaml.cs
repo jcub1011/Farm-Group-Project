@@ -118,8 +118,6 @@ namespace Farm_Group_Project.VisualizationItems
             X = item.X;
             Y = item.Y;
             Price = item.Price;
-
-            Canvas.SetZIndex(this, 10000);
         }
 
         public void CancelMoves()

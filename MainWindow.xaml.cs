@@ -31,30 +31,47 @@ namespace Farm_Group_Project
             InitializeComponent();
 
             // Code for testing.
-            var building = new InventoryItem("Building 1", Tags.Building, 30, 100, 400, 100, 10000, new());
-            var building2 = new InventoryItem("Building 2", Tags.Building, 10, 10, 90, 90, 10000, new());
-            var item1 = new InventoryItem("Item 1", Tags.Equipment, 10, 10, 50, 50, 10);
-            var item2 = new InventoryItem("Item 2", Tags.Equipment, 30, 10, 50, 50, 10);
-            var item3 = new InventoryItem("Item 3", Tags.Equipment, 10, 10, 50, 50, 10);
+            var commandCenter = new InventoryItem("Command Center", Tags.Building, 0, 0, 80, 80, 1000, new());
 
-            var building3 = new InventoryItem("Building 3", Tags.Building, 450, 100, 100, 100, 10000, new());
+            var barn = new InventoryItem("Barn", Tags.Building, 0, 100, 500, 100, 10000, new());
+            var livestockArea = new InventoryItem("Livestock Area", Tags.Building, 100, 0, 100, 100, 1000, new());
+            var milkStorage = new InventoryItem("Milk Storage", Tags.Building, 0, 0, 100, 100, 9800, new());
 
-            building.Children.Add(building2);
-            building.Children.Add(item2);
-            building2.Children.Add(item1);
-            building3.Children.Add(item3);
+            barn.Children?.Add(livestockArea);
+            barn.Children?.Add(milkStorage);
 
-            ObservableCollection<IInventoryItem> sourceItems = new();
+            var cow = new InventoryItem("Cow", Tags.Livestock, 0, 0, 20, 20, 500);
+            livestockArea.Children?.Add(cow);
+
+            var storageBuilding = new InventoryItem("Storage Building", Tags.Building, 0, 250, 100, 100, 9800, new());
+            var tractor = new InventoryItem("Tractor", Tags.Equipment, 0, 0, 50, 50, 27000);
+            var tiller = new InventoryItem("Tiller", Tags.Equipment, 80, 0, 50, 50, 21000);
+            storageBuilding.Children?.Add(tractor);
+            storageBuilding.Children?.Add(tiller);
+
+            var soy = new InventoryItem("Soy", Tags.Crop, 250, 300, 100, 50, 2000);
+
+            ObservableCollection<IInventoryItem> sourceItems = new()
+            {
+                new VirtualDrone("Drone", Tags.Drone, 100, 100, 1000)
+            };
 
             Inventory.Source = sourceItems;
             Visualizer.Source = sourceItems;
 
-            sourceItems.Add(building);
-            sourceItems.Add(building3);
-            sourceItems.Add(new VirtualDrone("Drone", Tags.Drone, 20, 20, 1000));
+            sourceItems.Add(commandCenter);
+            sourceItems.Add(barn);
+            sourceItems.Add(storageBuilding);
+            sourceItems.Add(soy);
 
             Visualizer.UpdateView();
-            Visualizer.Drone.MoveTo(200, 200, 100);
+
+            ContentRendered += (_, _) =>
+            {
+                var dest = Visualizer.FindPointForItem(commandCenter);
+                Visualizer.Drone?.MoveTo(dest.X, dest.Y + 20, 300);
+            };
+            
             // End code for testing.
         }
     }

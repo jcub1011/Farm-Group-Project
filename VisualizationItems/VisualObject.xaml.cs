@@ -38,14 +38,24 @@ namespace Farm_Group_Project.VisualizationItems
 
         public double ItemWidth
         {
-            get => ContentHolder.MinWidth;
-            set => ContentHolder.MinWidth = value;
+            get => MainContainer.MinWidth;
+            set => MainContainer.MinWidth = value;
         }
 
         public double ItemHeight
         {
-            get => ContentHolder.MinHeight;
-            set => ContentHolder.MinHeight = value;
+            get => MainContainer.MinHeight;
+            set => MainContainer.MinHeight = value;
+        }
+
+        public UIElementCollection ObjectChildren
+        {
+            get => ContentHolder.Children;
+        }
+
+        public IInventoryItem SourceItem
+        {
+            get; private set;
         }
 
         public string ItemTag { get; private set; }
@@ -65,6 +75,8 @@ namespace Farm_Group_Project.VisualizationItems
             ItemWidth = item.ItemWidth;
             ItemHeight = item.ItemHeight;
 
+            SourceItem = item;
+
             if (item.Children != null)
             {
                 foreach (IInventoryItem child in item.Children)
@@ -76,7 +88,6 @@ namespace Farm_Group_Project.VisualizationItems
             // Subscribe Property Changed
             item.PropertyChanged += (_, e) =>
             {
-                Debug.WriteLine($"Property changed: {e.PropertyName}");
                 switch(e.PropertyName)
                 {
                     case nameof(item.ItemName):

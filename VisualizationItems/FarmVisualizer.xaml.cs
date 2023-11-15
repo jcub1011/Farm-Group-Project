@@ -52,25 +52,13 @@ namespace Farm_Group_Project.VisualizationItems
             }
 
             // Update drone situation.
+            IInventoryItem? droneSource = null;
             foreach(IInventoryItem child in Source)
             {
                 if (child.ItemTag == Tags.Drone)
                 {
                     Drone = (VirtualDrone)child;
-                    var modelDrone = new VirtualDrone(child);
-
-                    // Connect locations of drones (this is only one way). Don't mind the hacky solution.
-                    Drone.PropertyChanged += (sender, e) =>
-                    {
-                        if (e.PropertyName == nameof(Drone.X))
-                        {
-                            modelDrone.X = Drone.X;
-                        }
-                        else if (e.PropertyName == nameof(Drone.Y))
-                        {
-                            modelDrone.Y = Drone.Y;
-                        }
-                    };
+                    droneSource = child;
                     break;
                 }
             }
@@ -78,8 +66,41 @@ namespace Farm_Group_Project.VisualizationItems
             // Update items in farm visualizer.
             foreach (var item in Source)
             {
+                if (item.ItemTag == Tags.Drone)
+                {
+                    continue;
+                }
                 ContentHolder.Children.Add(new VisualObject(item));
             }
+
+            // Add drone last so it appears on top.
+            if (droneSource != null) ContentHolder.Children.Add(new VisualObject(droneSource));
+        }
+
+        public Point FindPointForItem(IInventoryItem item)
+        {
+            var result = FindPointForItem(item, ContentHolder.Children);
+            if (result == null) throw new Exception($"Unable to find {item.ItemName} in {nameof(FarmVisualizer)}.");
+
+            var origin = ContentHolder.PointToScreen(new Point(0, 0));
+            return (Point)((Point)result - origin);
+        }
+
+        private Point? FindPointForItem(IInventoryItem item, UIElementCollection source)
+        {
+            foreach(VisualObject child in source)
+            {
+                if (ReferenceEquals(child.SourceItem, item))
+                {
+                    return child.PointToScreen(new Point(0, 0));
+                }
+
+                var result = FindPointForItem(item, child.ObjectChildren);
+                if (result == null) continue;
+                else return result;
+            }
+
+            return null;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

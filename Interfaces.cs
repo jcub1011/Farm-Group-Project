@@ -19,6 +19,7 @@ namespace Farm_Group_Project.VisualizationItems
         public const string Crop = "Crop";
         public const string Item = "Item";
         public const string Equipment = "Equipment";
+        public const string Livestock = "Livestock";
     }
 
     public static class TagEvaluator
