@@ -26,7 +26,7 @@ namespace Farm_Group_Project.InventorySystem
     {
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(nameof(Source), typeof(ObservableCollection<IInventoryItem>), typeof(VisualObject));
         private bool disposedValue;
-        public IInventoryItem SelectedItem
+        public IInventoryItem? SelectedItem
         {
             get
             {

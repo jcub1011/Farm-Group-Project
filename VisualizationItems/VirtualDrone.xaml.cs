@@ -24,6 +24,8 @@ namespace Farm_Group_Project.VisualizationItems
     public partial class VirtualDrone : UserControl, IInventoryItem, INotifyPropertyChanged
     {
         const double UPDATE_RATE = 60;
+        const double SCAN_TIME = 1;
+
         bool _isMoving;
         bool _cancel;
         Queue<MoveCommand> _movesToComplete;
@@ -102,8 +104,6 @@ namespace Farm_Group_Project.VisualizationItems
             X = x;
             Y = y;
             Price = price;
-
-            // Canvas.SetZIndex(this, 10000);
         }
 
         public VirtualDrone(IInventoryItem item)
@@ -172,6 +172,9 @@ namespace Farm_Group_Project.VisualizationItems
                 await Task.Delay((int)(1 / UPDATE_RATE * 1000));
                 fullTicksToComplete--;
             }
+
+            // Simulated scan time.
+            await Task.Delay((int)(SCAN_TIME * 1000));
 
             _isMoving = false;
             X = newX;

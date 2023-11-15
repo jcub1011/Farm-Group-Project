@@ -26,9 +26,43 @@ namespace Farm_Group_Project
     /// </summary>
     public partial class MainWindow : Window
     {
+        public const double DRONE_SPEED = 200d;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            // Hookup drone interface buttons.
+            DroneButtons.OnVisitItemClicked += () =>
+            {
+                if (Inventory.SelectedItem != null)
+                {
+                    Point dest = Visualizer.FindPointForItem(Inventory.SelectedItem);
+                    Visualizer.Drone?.MoveTo(dest.X, dest.Y + 20, DRONE_SPEED);
+                }
+                else return;
+            };
+
+            DroneButtons.OnScanFarmClicked += () =>
+            {
+                Stack<IInventoryItem> stack = new();
+                foreach(var item in Inventory.Source)
+                {
+                    stack.Push(item);
+                    while (stack.Count > 0)
+                    {
+                        IInventoryItem current = stack.Pop();
+
+                        Point dest = Visualizer.FindPointForItem(current);
+                        Visualizer.Drone?.MoveTo(dest.X, dest.Y + 20, DRONE_SPEED);
+
+                        if (current.Children != null)
+                        {
+                            foreach (var child in current.Children) stack.Push(child);
+                        }
+                    }
+                }
+            };
 
             // Code for testing.
             var commandCenter = new InventoryItem("Command Center", Tags.Building, 0, 0, 80, 80, 1000, new());
@@ -69,7 +103,7 @@ namespace Farm_Group_Project
             ContentRendered += (_, _) =>
             {
                 var dest = Visualizer.FindPointForItem(commandCenter);
-                Visualizer.Drone?.MoveTo(dest.X, dest.Y + 20, 300);
+                Visualizer.Drone?.MoveTo(dest.X, dest.Y + 20, DRONE_SPEED);
             };
             
             // End code for testing.

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Farm_Group_Project"
         xmlns:inv="clr-namespace:Farm_Group_Project.InventorySystem"
         xmlns:vis="clr-namespace:Farm_Group_Project.VisualizationItems"
+        xmlns:dro="clr-namespace:Farm_Group_Project.DroneInterface"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="White">
@@ -19,7 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <inv:InventoryView Grid.Row="0" Grid.Column="0" x:Name="Inventory"/>
-
         <vis:FarmVisualizer Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="Visualizer"/>
+        <dro:DroneCommandButtons Grid.Row="2" Grid.Column="0" x:Name="DroneButtons" Padding="10"/>
     </Grid>
 </Window>
