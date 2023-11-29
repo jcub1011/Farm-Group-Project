@@ -10,9 +10,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Button Grid.Row="0" Click="OnVisitItem">Visit Selected Item</Button>
         <Button Grid.Row="1" Click="OnScanFarm">Scan Farm</Button>
+        <Button Grid.Row="2" Click="OnWaterSelectedArea">Water Selected Item</Button>
     </Grid>
 </UserControl>

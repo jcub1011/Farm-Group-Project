@@ -1,4 +1,5 @@
-﻿using Farm_Group_Project.InventorySystem;
+﻿using Farm_Group_Project.DroneInterface;
+using Farm_Group_Project.InventorySystem;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Concurrent;
@@ -16,6 +17,7 @@ namespace Farm_Group_Project.VisualizationItems
         public double TargetX { get; set; }
         public double TargetY { get; set; }
         public double Velocity { get; set; }
+        public bool WaterArea { get; set; }
     }
 
     /// <summary>
@@ -25,6 +27,7 @@ namespace Farm_Group_Project.VisualizationItems
     {
         const double UPDATE_RATE = 60;
         const double SCAN_TIME = 1;
+        const double WATER_TIME = 3;
 
         bool _isMoving;
         bool _cancel;
@@ -134,7 +137,8 @@ namespace Farm_Group_Project.VisualizationItems
         /// </summary>
         /// <param name="coords">Target position.</param>
         /// <param name="velocity">Pixels per second.</param>
-        public async void MoveTo(double newX, double newY, double velocity)
+        /// <param name="waterArea">If the area should be watered.</param>
+        public async Task MoveTo(double newX, double newY, double velocity, bool waterArea = false)
         {
             // Checks if the drone is busy and queues the command if it is.
             if (_isMoving)
@@ -174,7 +178,8 @@ namespace Farm_Group_Project.VisualizationItems
             }
 
             // Simulated scan time.
-            await Task.Delay((int)(SCAN_TIME * 1000));
+            if (waterArea) await WaterArea();
+            else await Task.Delay((int)(SCAN_TIME * 1000));
 
             _isMoving = false;
             X = newX;
@@ -183,8 +188,15 @@ namespace Farm_Group_Project.VisualizationItems
             if (_movesToComplete.Count > 0)
             {
                 var next = _movesToComplete.Dequeue();
-                MoveTo(next.TargetX, next.TargetY, next.Velocity);
+                _ = MoveTo(next.TargetX, next.TargetY, next.Velocity, next.WaterArea);
             }
+        }
+
+        public static async Task WaterArea()
+        {
+            DroneCommandHandler.SendMessage(DroneCommands.BeginWateringMessage);
+            await Task.Delay((int)(WATER_TIME * 1000));
+            DroneCommandHandler.SendMessage(DroneCommands.StopWateringMessage);
         }
     }
 }

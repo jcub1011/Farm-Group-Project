@@ -1,4 +1,5 @@
-﻿using Farm_Group_Project.InventorySystem;
+﻿using Farm_Group_Project.DroneInterface;
+using Farm_Group_Project.InventorySystem;
 using Farm_Group_Project.VisualizationItems;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,9 @@ namespace Farm_Group_Project
         {
             InitializeComponent();
 
+            DroneCommandHandler.InitDronePort("COM6");
+            DroneCommandHandler.OpenDronePort();
+
             // Hookup drone interface buttons.
             DroneButtons.OnVisitItemClicked += () =>
             {
@@ -39,6 +43,16 @@ namespace Farm_Group_Project
                 {
                     Point dest = Visualizer.FindPointForItem(Inventory.SelectedItem);
                     Visualizer.Drone?.MoveTo(dest.X, dest.Y + 20, DRONE_SPEED);
+                }
+                else return;
+            };
+
+            DroneButtons.OnWaterItemClicked += () =>
+            {
+                if (Inventory.SelectedItem != null)
+                {
+                    Point dest = Visualizer.FindPointForItem(Inventory.SelectedItem);
+                    Visualizer.Drone?.MoveTo(dest.X, dest.Y + 20, DRONE_SPEED, true);
                 }
                 else return;
             };

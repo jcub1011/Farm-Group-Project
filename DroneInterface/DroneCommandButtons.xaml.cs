@@ -29,6 +29,7 @@ namespace Farm_Group_Project.DroneInterface
         public delegate void ButtonClicked();
         public event ButtonClicked OnVisitItemClicked;
         public event ButtonClicked OnScanFarmClicked;
+        public event ButtonClicked OnWaterItemClicked;
 
         private void OnVisitItem(object sender, RoutedEventArgs e)
         {
@@ -38,6 +39,11 @@ namespace Farm_Group_Project.DroneInterface
         private void OnScanFarm(object sender, RoutedEventArgs e)
         {
             OnScanFarmClicked?.Invoke();
+        }
+
+        private void OnWaterSelectedArea(object sender, RoutedEventArgs e)
+        {
+            OnWaterItemClicked?.Invoke();
         }
     }
 }

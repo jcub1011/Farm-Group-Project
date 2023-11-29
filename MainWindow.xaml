@@ -11,7 +11,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,8 +18,12 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <inv:InventoryView Grid.Row="0" Grid.Column="0" x:Name="Inventory"/>
-        <vis:FarmVisualizer Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="Visualizer"/>
-        <dro:DroneCommandButtons Grid.Row="2" Grid.Column="0" x:Name="DroneButtons" Padding="10"/>
+        <ScrollViewer Grid.Column="0">
+            <StackPanel>
+                <inv:InventoryView x:Name="Inventory"/>
+                <dro:DroneCommandButtons x:Name="DroneButtons" Padding="10"/>
+            </StackPanel>
+        </ScrollViewer>
+        <vis:FarmVisualizer Grid.Column="1" x:Name="Visualizer"/>
     </Grid>
 </Window>
