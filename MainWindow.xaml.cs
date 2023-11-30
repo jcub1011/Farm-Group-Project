@@ -81,15 +81,17 @@ namespace Farm_Group_Project
             // Code for testing.
             var commandCenter = new InventoryItem("Command Center", Tags.Building, 0, 0, 80, 80, 1000, new());
 
-            var barn = new InventoryItem("Barn", Tags.Building, 0, 100, 500, 100, 10000, new());
-            var livestockArea = new InventoryItem("Livestock Area", Tags.Building, 100, 0, 100, 100, 1000, new());
+            var barn = new InventoryItem("Barn", Tags.Building, 0, 100, 500, 100, 5000, new());
+            var livestockArea = new InventoryItem("Livestock Area", Tags.Building, 100, 0, 100, 100, 3000, new());
             var milkStorage = new InventoryItem("Milk Storage", Tags.Building, 0, 0, 100, 100, 9800, new());
 
             barn.Children?.Add(livestockArea);
             barn.Children?.Add(milkStorage);
 
             var cow = new InventoryItem("Cow", Tags.Livestock, 0, 0, 20, 20, 500);
+            var tool = new InventoryItem("Auger", Tags.Item, 230, 20, 10, 10, 500);
             livestockArea.Children?.Add(cow);
+            barn.Children?.Add(tool);
 
             var storageBuilding = new InventoryItem("Storage Building", Tags.Building, 0, 250, 100, 100, 9800, new());
             var tractor = new InventoryItem("Tractor", Tags.Equipment, 0, 0, 50, 50, 27000);
