@@ -20,7 +20,7 @@ namespace Farm_Group_Project.InventorySystem
         double ItemHeight { get; set; }
         double Price { get; set; }
         double MarketValue { get; set; }
-        double NetValue { get; set; }
+        double NetValue { get; }
 
         /// <summary>
         /// When null, object cannot carry children.
@@ -134,10 +134,6 @@ namespace Farm_Group_Project.InventorySystem
                 }
 
                 return sum;
-            }
-            set
-            {
-                double val = value;
             }
         }
 

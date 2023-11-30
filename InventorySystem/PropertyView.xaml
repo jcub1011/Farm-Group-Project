@@ -45,6 +45,6 @@
         <TextBlock Grid.Row="6" Grid.Column="0" Padding="10 0">Market Value:</TextBlock>
         <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.MarketValue, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBlock Grid.Row="7" Grid.Column="0" Padding="10 0">Net Value:</TextBlock>
-        <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.NetValue, Converter={StaticResource dblToStr}}" IsReadOnly="True"/>
+        <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.NetValue, Converter={StaticResource dblToStr}, Mode=OneWay}" IsReadOnly="True"/>
     </Grid>
 </UserControl>
