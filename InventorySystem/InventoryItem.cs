@@ -19,6 +19,8 @@ namespace Farm_Group_Project.InventorySystem
         double ItemWidth { get; set; }
         double ItemHeight { get; set; }
         double Price { get; set; }
+        double MarketValue { get; set; }
+        double NetValue { get; set; }
 
         /// <summary>
         /// When null, object cannot carry children.
@@ -105,6 +107,40 @@ namespace Farm_Group_Project.InventorySystem
             }
         }
 
+        double _marketValue;
+        public double MarketValue
+        {
+            get => _marketValue;
+            set
+            {
+                _marketValue = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MarketValue)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NetValue)));
+            }
+        }
+
+        public double NetValue
+        {
+            get
+            {
+                double sum = MarketValue;
+
+                if (_children != null)
+                {
+                    foreach (var child in _children)
+                    {
+                        sum += child.NetValue;
+                    }
+                }
+
+                return sum;
+            }
+            set
+            {
+                double val = value;
+            }
+        }
+
         ObservableCollection<IInventoryItem>? _children;
         public ObservableCollection<IInventoryItem>? Children
         {
@@ -125,7 +161,7 @@ namespace Farm_Group_Project.InventorySystem
         /// <param name="y">Y position.</param>
         /// <param name="width">Width of the item.</param>
         /// <param name="height">Height of the item.</param>
-        /// <param name="price">Price of the item.</param>
+        /// <param name="price">Price and market value of the item.</param>
         /// <param name="children">Children of the item.</param>
         public InventoryItem(string itemName, string itemTag, double x, double y, double width, double height, double price, ObservableCollection<IInventoryItem>? children = null)
         {
@@ -136,6 +172,33 @@ namespace Farm_Group_Project.InventorySystem
             ItemWidth = width;
             ItemHeight = height;
             Price = price;
+            MarketValue = price;
+            if (TagEvaluator.IsChildCarryingTag(itemTag)) Children = children ?? new ObservableCollection<IInventoryItem>();
+            else Children = null;
+        }
+
+        /// <summary>
+        /// Creates a new inventory item.
+        /// </summary>
+        /// <param name="itemName">Name of the item.</param>
+        /// <param name="itemTag">Tag of the item.</param>
+        /// <param name="x">X postion.</param>
+        /// <param name="y">Y position.</param>
+        /// <param name="width">Width of the item.</param>
+        /// <param name="height">Height of the item.</param>
+        /// <param name="price">Price of the item.</param>
+        /// <param name="marketValue">Current market value of the item.</param>
+        /// <param name="children">Children of the item.</param>
+        public InventoryItem(string itemName, string itemTag, double x, double y, double width, double height, double price, double marketValue, ObservableCollection<IInventoryItem>? children = null)
+        {
+            ItemName = itemName;
+            ItemTag = itemTag;
+            X = x;
+            Y = y;
+            ItemWidth = width;
+            ItemHeight = height;
+            Price = price;
+            MarketValue = marketValue;
             if (TagEvaluator.IsChildCarryingTag(itemTag)) Children = children ?? new ObservableCollection<IInventoryItem>();
             else Children = null;
         }

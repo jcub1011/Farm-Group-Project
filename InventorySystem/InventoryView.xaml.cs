@@ -72,7 +72,7 @@ namespace Farm_Group_Project.InventorySystem
                 {
                     PropertyShower.DisablePropertyModification = true;
                     var drone = (VirtualDrone)ContentContainer.SelectedItem;
-                    var displayValues = new InventoryItem(drone.ItemName, drone.ItemTag, drone.X, drone.Y, drone.Width, drone.Height, drone.Price);
+                    var displayValues = new InventoryItem(drone.ItemName, drone.ItemTag, drone.X, drone.Y, drone.Width, drone.Height, drone.Price, drone.Price);
                     PropertyShower.ItemToModify = displayValues;
                     RemoveIsEnabled = false;
                     ItemMaker.CanAddChild = false;

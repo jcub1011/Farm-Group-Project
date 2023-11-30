@@ -89,6 +89,15 @@ namespace Farm_Group_Project.VisualizationItems
         }
 
         public double Price { get; set; }
+        public double MarketValue { get; set; }
+        public double NetValue
+        {
+            get => MarketValue;
+            set
+            {
+                double val = value;
+            }
+        }
 
         double GetDistance(double x1, double y1, double x2, double y2)
         {

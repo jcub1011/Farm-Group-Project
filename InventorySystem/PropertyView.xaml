@@ -18,6 +18,8 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -40,5 +42,9 @@
         <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding ItemToModify.ItemHeight, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Padding="10 0">Price:</TextBlock>
         <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.Price, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Padding="10 0">Market Value:</TextBlock>
+        <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.MarketValue, Converter={StaticResource dblToStr}}" IsReadOnly="{Binding DisablePropertyModification}"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Padding="10 0">Net Value:</TextBlock>
+        <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ItemToModify.NetValue, Converter={StaticResource dblToStr}}" IsReadOnly="True"/>
     </Grid>
 </UserControl>

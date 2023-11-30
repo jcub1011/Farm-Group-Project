@@ -23,7 +23,7 @@ namespace Farm_Group_Project.InventorySystem
         public ItemGenerator()
         {
             InitializeComponent();
-            ItemPropertyViewer.ItemToModify = new("default", "default", 0, 0, 0, 0, 0);
+            ItemPropertyViewer.ItemToModify = new("default", "default", 0, 0, 0, 0, 0, 0);
         }
 
         public void SetGeneratorValues(IInventoryItem item)
@@ -35,6 +35,7 @@ namespace Farm_Group_Project.InventorySystem
                 item.Y,
                 item.ItemWidth,
                 item.ItemHeight,
+                item.Price,
                 item.Price);
             ItemPropertyViewer.ItemToModify = temp;
         }
@@ -58,6 +59,7 @@ namespace Farm_Group_Project.InventorySystem
                 ItemPropertyViewer.ItemToModify.Y,
                 ItemPropertyViewer.ItemToModify.ItemWidth,
                 ItemPropertyViewer.ItemToModify.ItemHeight,
+                ItemPropertyViewer.ItemToModify.Price,
                 ItemPropertyViewer.ItemToModify.Price));
         }
 
@@ -70,6 +72,7 @@ namespace Farm_Group_Project.InventorySystem
                 ItemPropertyViewer.ItemToModify.Y,
                 ItemPropertyViewer.ItemToModify.ItemWidth,
                 ItemPropertyViewer.ItemToModify.ItemHeight,
+                ItemPropertyViewer.ItemToModify.Price,
                 ItemPropertyViewer.ItemToModify.Price));
         }
     }

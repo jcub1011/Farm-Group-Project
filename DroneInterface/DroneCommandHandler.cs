@@ -28,17 +28,17 @@ namespace Farm_Group_Project.DroneInterface
 
         public static void OpenDronePort()
         {
-            _dronePort?.Open();
+            //_dronePort?.Open();
         }
 
         public static void CloseDronePort()
         {
-            _dronePort?.Close();
+            //_dronePort?.Close();
         }
 
         public static void SendMessage(string message)
         {
-            _dronePort?.Write(message);
+            //_dronePort?.Write(message);
         }
 
         public static bool IsDronePortInitialized()
